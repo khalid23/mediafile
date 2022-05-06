@@ -17,73 +17,73 @@ while True:
 
     #print(lmList)
     if len(lmList) != 0:
-        if pose_ == '1':
+        if pose_ == 'squat':
             ####################
             #---------------------#
-            right_leg_angle = detector.findAngle(img, 23, 25, 27)
-            left_leg_angle = detector.findAngle(img, 24, 26, 28)
+            leg_angle = detector.findAngle(img, 24, 26, 28)
+            leg_angle = detector.findAngle(img, 12, 24, 26)
+            leg_angle = detector.findAngle(img, 8, 12, 24)
 
-            percent_ = np.interp(right_leg_angle,(170,290),(0,100))
-            percent_ = np.interp(left_leg_angle,(170,290),(0,100))
+
+            percent_ = np.interp(leg_angle,(170,290),(0,100))
+            percent_ = np.interp(leg_angle,(170,290),(0,100))
             cv2.putText(img,str(int(percent_ )),(50, 50),cv2.FONT_HERSHEY_PLAIN,2,(0,255,0),2)
+            cv2.rectangle(img, (0,0), (225,73), (245,117,16), -1)
             #----------------------#
-            if right_leg_angle > 150:
+            if leg_angle > 150:
                 stage = "up"
                 cv2.putText(img, stage,
-                    (65,70),
+                    (60,60),
                     cv2.FONT_HERSHEY_SIMPLEX, 1, (67,255,78), 2, cv2.LINE_AA )
-            if right_leg_angle < 45 :
+            if leg_angle < 45 :
                 stage="down"
                 cv2.putText(img, stage,
-                    (65,75),
+                    (60,60),
                     cv2.FONT_HERSHEY_SIMPLEX, 1, (89,255,159), 2, cv2.LINE_AA )
 
 
-        elif pose_ == '2':
+        elif pose_ == 'deadlift':
 
-            right_leg_angle = detector.findAngle(img, 24, 26, 28)
-            #left_leg_angle = detector.findAngle(img, 23, 25, 27)
+            leg_angle = detector.findAngle(img, 12, 26, 28)
+            leg_angle = detector.findAngle(img, 8, 12, 24)
+            leg_angle = detector.findAngle(img, 24, 26, 28)
 
-            percent_ = np.interp(right_leg_angle,(20,180),(0,100))
+            percent_ = np.interp(leg_angle,(20,180),(0,100))
             #percent_ = np.interp(left_leg_angle,(170,290),(0,100))
             cv2.putText(img,str(int(percent_ )),(50, 50),cv2.FONT_HERSHEY_PLAIN,2,(0,255,0),2)
+            cv2.rectangle(img, (0,0), (225,73), (245,117,16), -1)
 
-            if right_leg_angle > 150:
+            if leg_angle > 150:
                 stage = "up"
                 cv2.putText(img, stage,
-                    (65,70),
+                    (60,60),
                     cv2.FONT_HERSHEY_SIMPLEX, 1, (67,255,255), 2, cv2.LINE_AA )
-            if right_leg_angle < 50 :
+            if leg_angle < 50 :
                 stage="down"
                 cv2.putText(img, stage,
-                    (65,75),
+                   (60,60),
                     cv2.FONT_HERSHEY_SIMPLEX, 1, (89,255,255), 2, cv2.LINE_AA )
 
 #bench press
-        elif pose_ == '3':
+        elif pose_ == 'bench press':
             stage = None
+            #joints angles detected
             arm_angle = detector.findAngle(img,16,14,12)
-            #arm_angle = detector.findAngle(img,11,13,15)
+            arm_angle = detector.findAngle(img,14,12,24)
+            angle = detector.findAngle(img,12,24,26)
             percent_ = np.interp(arm_angle,(20,180),(0,100))
             cv2.putText(img,str(int(percent_ )),(50, 50),cv2.FONT_HERSHEY_PLAIN,2,(0,255,0),2)
+            cv2.rectangle(img, (0,0), (225,73), (245,117,16), -1)
             if arm_angle > 150:
                 stage = "up"
                 cv2.putText(img, stage,
-                    (65,70),
+                   (60,60),
                     cv2.FONT_HERSHEY_SIMPLEX, 1, (67,255,78), 2, cv2.LINE_AA )
             if arm_angle < 45 :
                 stage="down"
                 cv2.putText(img, stage,
-                    (65,75),
+                    (60,60),
                     cv2.FONT_HERSHEY_SIMPLEX, 1, (89,255,159), 2, cv2.LINE_AA )
-
-                #print(stage)
-            # Stage data
-            #cv2.putText(img, 'STAGE', (65,52),
-                    #cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,0), 1, cv2.LINE_AA)
-
-
-
 
 
     cv2.imshow('image',img)
